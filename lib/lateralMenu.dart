@@ -1,8 +1,8 @@
 import 'package:contat/style/appcolors.dart';
-import 'package:contat/view/contatos_view.dart';
-import 'package:contat/view/dispositivos_view.dart';
-import 'package:contat/view/grupos_view.dart';
-import 'package:contat/view/usuario_view.dart';
+import 'package:contat/contatos/view/contatos_view.dart';
+import 'package:contat/dispositivos/view/dispositivos_view.dart';
+import 'package:contat/grupos/view/grupos_view.dart';
+import 'package:contat/usuarios/view/usuario_view.dart';
 import 'package:flutter/material.dart';
 import 'package:side_navigation/side_navigation.dart';
 

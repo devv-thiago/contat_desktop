@@ -1,5 +1,5 @@
 import 'package:contat/style/appcolors.dart';
-import 'package:contat/view/widgets/lateralMenu.dart';
+import 'package:contat/lateralMenu.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable

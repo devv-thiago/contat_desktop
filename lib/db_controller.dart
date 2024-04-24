@@ -73,10 +73,20 @@ class DatabaseController {
     }
   }
 
-  Future insertRecords(String nomeTabela, String nomeGrupo) async {
+  Future insertNewGroup(String nomeTabela, String nomeGrupo) async {
     try {
       await database
           .rawInsert("INSERT INTO Grupos(nomeGrupo) VALUES ('$nomeGrupo');");
+      debugPrint("Grupo cadastrado com sucesso");
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  Future insertNewContact(String nomeTabela, String nomeGrupo) async {
+    try {
+      await database
+          .rawInsert("INSERT INTO Contatos(nomeGrupo) VALUES ('$nomeGrupo');");
       debugPrint("Grupo cadastrado com sucesso");
     } catch (e) {
       debugPrint(e.toString());

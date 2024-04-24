@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:contat/controller/db_controller.dart';
-import 'package:contat/view/homepage.dart';
+import 'package:contat/db_controller.dart';
+import 'package:contat/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 

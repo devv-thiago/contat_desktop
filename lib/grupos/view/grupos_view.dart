@@ -1,8 +1,6 @@
-import 'dart:ffi';
-
-import 'package:contat/controller/db_controller.dart';
+import 'package:contat/db_controller.dart';
 import 'package:contat/style/appcolors.dart';
-import 'package:contat/view/widgets/cadastro_grupo.dart';
+import 'package:contat/grupos/widget/cadastro_grupo.dart';
 
 import 'package:flutter/material.dart';
 
@@ -45,7 +43,7 @@ class _GruposViewState extends State<GruposView> {
                     nomeGrupoController: nomeGrupoController,
                     onPressed: () {
                       databaseController
-                          .insertRecords(
+                          .insertNewGroup(
                             "Grupos",
                             nomeGrupoController.text,
                           )
