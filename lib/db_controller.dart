@@ -17,6 +17,11 @@ class DatabaseController {
       _instance.database = await openDatabase(path, version: 1,
           onCreate: (Database db, int version) async {
         await db.execute('''
+          CREATE TABLE Grupos (
+            idGrupo INTEGER PRIMARY KEY AUTOINCREMENT,
+            nomeGrupo TEXT
+          );
+
           CREATE TABLE Contatos (
             idContato INTEGER PRIMARY KEY AUTOINCREMENT, 
             displayName TEXT,
@@ -32,22 +37,15 @@ class DatabaseController {
           );
 
           CREATE TABLE Emails (
-            idEmail INTEGER PRIMARY KEY AUTOINCREMENT,
+	          emailAdress TEXT PRIMARY KEY UNIQUE NOT NULL,
             idContato INTEGER,
-            emailAdress TEXT,
             FOREIGN KEY (idContato) REFERENCES Contatos(idContato)
           );
 
           CREATE TABLE Telefones (
-            idTelefone INTEGER PRIMARY KEY AUTOINCREMENT,
-            idContato INTEGER,
-            Telefone TEXT,
+            Telefone TEXT PRIMARY KEY UNIQUE NOT NULL,
+	          idContato INTEGER,
             FOREIGN KEY (idContato) REFERENCES Contatos(idContato)
-          );
-
-          CREATE TABLE Grupos (
-            idGrupo INTEGER PRIMARY KEY AUTOINCREMENT,
-            nomeGrupo TEXT
           );
         ''');
       });
@@ -64,6 +62,13 @@ class DatabaseController {
     return result;
   }
 
+  Future<List<Map<String, dynamic>>> getAllContacts(String nomeTabela) async {
+    List<Map<String, dynamic>> result =
+        await database.rawQuery('SELECT * FROM $nomeTabela');
+
+    return result;
+  }
+
   Future deleteGroup(int idGrupo) async {
     try {
       await database
@@ -73,7 +78,7 @@ class DatabaseController {
     }
   }
 
-  Future insertNewGroup(String nomeTabela, String nomeGrupo) async {
+  Future insertNewGroup(String nomeGrupo) async {
     try {
       await database
           .rawInsert("INSERT INTO Grupos(nomeGrupo) VALUES ('$nomeGrupo');");
@@ -83,11 +88,15 @@ class DatabaseController {
     }
   }
 
-  Future insertNewContact(String nomeTabela, String nomeGrupo) async {
+  Future insertNewContact(
+    String displayName,
+    String company,
+    String jobTitle,
+  ) async {
     try {
-      await database
-          .rawInsert("INSERT INTO Contatos(nomeGrupo) VALUES ('$nomeGrupo');");
-      debugPrint("Grupo cadastrado com sucesso");
+      await database.rawInsert(
+          "INSERT INTO Contatos(displayName, company, jobTitle) VALUES ('$displayName', '$company', '$jobTitle');");
+      debugPrint("Contato cadastrado com sucesso");
     } catch (e) {
       debugPrint(e.toString());
     }

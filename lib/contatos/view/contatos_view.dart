@@ -2,7 +2,6 @@ import 'package:contat/contatos/widget/cadastro_contato.dart';
 import 'package:contat/db_controller.dart';
 import 'package:contat/style/appcolors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ContatosView extends StatefulWidget {
   const ContatosView({super.key});
@@ -50,7 +49,23 @@ class _ContatosViewState extends State<ContatosView> {
                   departamentoController: departamentoController,
                   emailController: emailController,
                   telefoneController: telefoneController,
-                  onPressed: () {}),
+                  onPressed: () {
+                    databaseController
+                        .insertNewContact(nomeCompletoController.text,
+                            departamentoController.text, cargoController.text)
+                        .whenComplete(() {
+                      nomeCompletoController.clear();
+                      emailController.clear();
+                      telefoneController.clear();
+                      departamentoController.clear();
+                      cargoController.clear();
+
+                      setState(() {
+                        // Chamada para buscar os dados novamente no banco de dados
+                        databaseController.getAllRecords("Contatos");
+                      });
+                    });
+                  }),
               Expanded(
                   child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -71,59 +86,49 @@ class _ContatosViewState extends State<ContatosView> {
                                 snapshot) {
                           if (snapshot.hasData) {
                             return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        alignment: Alignment.center,
-                                        padding: const EdgeInsets.all(8),
-                                        child: const Text("ID",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold)),
-                                      ),
-                                      const SizedBox(width: 16),
-                                      Container(
-                                        padding: const EdgeInsets.all(8),
-                                        child: const Text("Nome",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold)),
-                                      ),
-                                      const SizedBox(width: 16),
-                                      Container(
-                                        padding: const EdgeInsets.all(8),
-                                        child: const Text("Número telefone",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold)),
-                                      ),
-                                      const SizedBox(width: 16),
-                                      Container(
-                                        padding: const EdgeInsets.all(8),
-                                        child: const Text("Departamento",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold)),
-                                      ),
-                                      const SizedBox(width: 16),
-                                      Container(
-                                        padding: const EdgeInsets.all(8),
-                                        child: const Text("Cargo",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold)),
-                                      ),
-                                    ],
-                                  ),
+                                Row(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(8),
+                                      child: const Text("Nome",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                    ),
+                                    const SizedBox(width: 30),
+                                    Container(
+                                      padding: const EdgeInsets.all(8),
+                                      child: const Text("Número telefone",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                    ),
+                                    const SizedBox(width: 30),
+                                    Container(
+                                      padding: const EdgeInsets.all(8),
+                                      child: const Text("Departamento",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                    ),
+                                    const SizedBox(width: 30),
+                                    Container(
+                                      padding: const EdgeInsets.all(8),
+                                      child: const Text("Cargo",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                    ),
+                                  ],
                                 ),
                                 ListView.builder(
                                   scrollDirection: Axis.vertical,
                                   shrinkWrap: true,
                                   itemCount: snapshot.data!.length,
                                   itemBuilder: (context, index) => Row(
+                                    
                                     children: [
                                       Container(
                                         alignment: Alignment.center,
-                                        width: deviceInfo.size.width * 0.03,
+                                        width: deviceInfo.size.width * 0.15,
                                         padding: const EdgeInsets.all(8),
                                         decoration: BoxDecoration(
                                           color: AppColors.secondColor,
@@ -131,11 +136,34 @@ class _ContatosViewState extends State<ContatosView> {
                                               BorderRadius.circular(20),
                                         ),
                                         child: Text(
-                                            "${snapshot.data![index]['idGrupo']}"),
+                                            "${snapshot.data![index]['displayName']}"),
                                       ),
-                                      const SizedBox(width: 16),
                                       Container(
-                                        width: deviceInfo.size.width * 0.4,
+                                        alignment: Alignment.center,
+                                        width: deviceInfo.size.width * 0.15,
+                                        padding: const EdgeInsets.all(8),
+                                        decoration: BoxDecoration(
+                                          color: AppColors.secondColor,
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: Text(
+                                            "${snapshot.data![index]['displayName']}"),
+                                      ),
+                                      Container(
+                                        alignment: Alignment.center,
+                                        width: deviceInfo.size.width * 0.05,
+                                        padding: const EdgeInsets.all(8),
+                                        decoration: BoxDecoration(
+                                          color: AppColors.secondColor,
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: Text(
+                                            "${snapshot.data![index]['company']}"),
+                                      ),
+                                      Container(
+                                        width: deviceInfo.size.width * 0.1,
                                         padding: const EdgeInsets.all(8),
                                         decoration: BoxDecoration(
                                           color: AppColors.secondColor,
@@ -146,15 +174,15 @@ class _ContatosViewState extends State<ContatosView> {
                                           padding:
                                               const EdgeInsets.only(left: 15),
                                           child: Text(
-                                              "${snapshot.data![index]['nomeGrupo']}"),
+                                              "${snapshot.data![index]['jobTitle']}"),
                                         ),
                                       ),
                                       IconButton(
                                           onPressed: () {
-                                            int idGrupo = snapshot.data![index]
-                                                ['idGrupo'];
+                                            int idContato = snapshot
+                                                .data![index]['idContato'];
                                             databaseController
-                                                .deleteGroup(idGrupo);
+                                                .deleteGroup(idContato);
                                             setState(() {
                                               databaseController
                                                   .getAllRecords("Contatos");

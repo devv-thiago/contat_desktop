@@ -44,7 +44,6 @@ class _GruposViewState extends State<GruposView> {
                     onPressed: () {
                       databaseController
                           .insertNewGroup(
-                            "Grupos",
                             nomeGrupoController.text,
                           )
                           .whenComplete(() => nomeGrupoController.clear());
