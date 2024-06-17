@@ -78,6 +78,15 @@ class DatabaseController {
     }
   }
 
+  Future deleteContact(int idContato) async {
+    try {
+      await database.rawDelete(
+          "DELETE FROM Contatos WHERE Contatos.idContato = $idContato");
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
   Future insertNewGroup(String nomeGrupo) async {
     try {
       await database

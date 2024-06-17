@@ -75,18 +75,9 @@ class _GruposViewState extends State<GruposView> {
                                     Row(
                                       children: [
                                         Container(
-                                          width: deviceInfo.size.width * 0.03,
-                                          alignment: Alignment.center,
-                                          padding: const EdgeInsets.all(8),
-                                          child: const Text("ID",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold)),
-                                        ),
-                                        const SizedBox(width: 16),
-                                        Container(
                                           width: deviceInfo.size.width * 0.4,
                                           padding: const EdgeInsets.all(8),
-                                          child: const Text("Nome",
+                                          child: const Text("Nome Grupo",
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold)),
                                         ),
@@ -99,20 +90,7 @@ class _GruposViewState extends State<GruposView> {
                                       itemBuilder: (context, index) => Row(
                                         children: [
                                           Container(
-                                            alignment: Alignment.center,
-                                            width: deviceInfo.size.width * 0.03,
-                                            padding: const EdgeInsets.all(8),
-                                            decoration: BoxDecoration(
-                                              color: AppColors.secondColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                            ),
-                                            child: Text(
-                                                "${snapshot.data![index]['idGrupo']}"),
-                                          ),
-                                          const SizedBox(width: 16),
-                                          Container(
-                                            width: deviceInfo.size.width * 0.4,
+                                            width: deviceInfo.size.width * 0.3,
                                             padding: const EdgeInsets.all(8),
                                             decoration: BoxDecoration(
                                               color: AppColors.secondColor,
