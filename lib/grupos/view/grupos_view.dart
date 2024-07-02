@@ -46,7 +46,7 @@ class _GruposViewState extends State<GruposView> {
                           .insertNewGroup(
                             nomeGrupoController.text,
                           )
-                          .whenComplete(() => nomeGrupoController.clear());
+                          .whenComplete(() => nomeGrupoController.clear()); 
                       setState(() {
                         // Chamada para buscar os dados novamente no banco de dados
                         databaseController.getAllRecords("Grupos");

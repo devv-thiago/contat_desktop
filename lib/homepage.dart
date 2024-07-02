@@ -6,15 +6,14 @@ import 'package:flutter/material.dart';
 class HomePage extends StatelessWidget {
   HomePage({super.key});
 
-  String appTitle = "Contat";
+  String appTitle = "CRS Contact Manager";
 
   @override
   Widget build(BuildContext context) {
-    MediaQueryData screenSize = MediaQuery.of(context);
     return Scaffold(
       backgroundColor: AppColors.accentColor,
       appBar: AppBar(
-        backgroundColor: AppColors.secondColor,
+        backgroundColor: AppColors.accentColor,
         title: Text(appTitle),
         actions: <Widget>[
           IconButton(onPressed: () {}, icon: const Icon(Icons.person))
