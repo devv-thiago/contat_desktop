@@ -10,8 +10,7 @@ void main() async {
   }
   databaseFactory = databaseFactoryFfi;
   WidgetsFlutterBinding.ensureInitialized();
-  await DatabaseController.initDatabase(
-      path: "F:/TI/Area/09_Thiago/database.db");
+  await DatabaseController.initDatabase(path: "C:/Users/thiag/Downloads/database.db");
   runApp(const MyApp());
 }
 
